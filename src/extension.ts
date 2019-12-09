@@ -25,11 +25,11 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "twicode" is now active!');
 
-  let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World!');
+  let changeName = vscode.commands.registerCommand('extension.changeName', () => {
+    vscode.window.showInformationMessage('Change Name!');
   });
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(changeName);
 }
 
 export function deactivate() {}
