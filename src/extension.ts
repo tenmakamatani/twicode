@@ -1,35 +1,61 @@
 import * as vscode from 'vscode';
 
-import Twitter from 'twitter';
-import { config as dotenvConfig } from 'dotenv';
+import { getUserName, updateUserName } from './libs/twitter';
+import { sleep } from './libs/sleep';
 
-// Enable environment values
-dotenvConfig();
-const env = process.env;
-const {
-  CONSUMER_KEY,
-  CONSUMER_SECRET,
-  ACCESS_TOKEN_KEY,
-  ACCESS_TOKEN_SECRET
-} = env;
+const extension = async () => {
+  // Get twitter username
+  let name;
+  try {
+    name = await getUserName();
+  } catch {
+    vscode.window.showErrorMessage('Could not get twitter username!');
+  }
+  if (!name) {
+    vscode.window.showErrorMessage('Twitter username is empty!');
+  }
 
-// Setup twitter client
-const client = new Twitter({
-  consumer_key: CONSUMER_KEY ? CONSUMER_KEY : '',
-  consumer_secret: CONSUMER_SECRET ? CONSUMER_SECRET : '',
-  access_token_key: ACCESS_TOKEN_KEY ? ACCESS_TOKEN_KEY : '',
-  access_token_secret: ACCESS_TOKEN_SECRET ? ACCESS_TOKEN_SECRET : ''
-});
+  // Get extension of editing file
+  const langs = vscode.window.activeTextEditor;
+  let extension;
+  if (langs) {
+    extension = langs.document.uri.fsPath.split('.').pop();
+  } else {
+    vscode.window.showErrorMessage('Please open any files!');
+  }
+
+  // Update username
+  if (name && langs) {
+    const params = {
+      name: `${name}.${extension}`
+    };
+    let updatedName;
+    try {
+      updatedName = await updateUserName(params);
+    } catch {
+      vscode.window.showErrorMessage('Could not update username!');
+    }
+    vscode.window.showInformationMessage(`Name changed to ${updatedName}!`);
+  } else {
+    vscode.window.showErrorMessage('Could not update username!');
+  }
+
+};
 
 export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "twicode" is now active!');
 
-  let changeName = vscode.commands.registerCommand('extension.changeName', () => {
-    vscode.window.showInformationMessage('Change Name!');
+  let disposable = vscode.commands.registerCommand('extension.changeName', async () => {
+
+    while (true) {
+      await extension();
+      await sleep(10000);
+    }
+
   });
 
-  context.subscriptions.push(changeName);
+  context.subscriptions.push(disposable);
 }
 
 export function deactivate() {}
