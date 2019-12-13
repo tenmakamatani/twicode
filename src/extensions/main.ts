@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { getUserName, updateUserName } from './twitter';
+import { getUserName, updateUserName } from '../lib/twitter';
 
 export const main = async () => {
   // Get twitter username
