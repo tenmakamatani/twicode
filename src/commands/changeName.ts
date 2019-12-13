@@ -1,12 +1,16 @@
 import * as vscode from 'vscode';
 
-import { getUserName, updateUserName } from '../lib/twitter';
+import { TwitterClient } from '../lib/TwitterClient';
 
 export const changeName = async () => {
+
+  // Create TwtterClient
+  const twitter = new TwitterClient();
+
   // Get twitter username
   let name;
   try {
-    name = await getUserName();
+    name = await twitter.getUserName();
   } catch {
     vscode.window.showErrorMessage('Could not get twitter username!');
   }
@@ -30,7 +34,7 @@ export const changeName = async () => {
     };
     let updatedName;
     try {
-      updatedName = await updateUserName(params);
+      updatedName = await twitter.updateUserName(params);
     } catch {
       vscode.window.showErrorMessage('Could not update username!');
     }
