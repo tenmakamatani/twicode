@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
-import { main } from './libs/main';
-import { sleep } from './libs/sleep';
+import { main } from './lib/main';
+import { sleep } from './lib/sleep';
 
 export function activate(context: vscode.ExtensionContext) {
 
