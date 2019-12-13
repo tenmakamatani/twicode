@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { main } from './extensions/main';
+import { changeName } from './commands/changeName';
 
 import { sleep } from './lib/sleep';
 
@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand('extension.changeName', async () => {
 
     while (true) {
-      await main();
+      await changeName();
       await sleep(10000);
     }
 

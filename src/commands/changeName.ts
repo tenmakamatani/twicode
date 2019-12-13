@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { getUserName, updateUserName } from '../lib/twitter';
 
-export const main = async () => {
+export const changeName = async () => {
   // Get twitter username
   let name;
   try {
