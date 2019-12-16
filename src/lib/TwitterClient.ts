@@ -13,13 +13,12 @@ class TwitterClient {
     dotenvConfig({
       path: resolve(__dirname, '../../.env')
     });
-    const env = process.env;
     const {
       CONSUMER_KEY,
       CONSUMER_SECRET,
       ACCESS_TOKEN_KEY,
       ACCESS_TOKEN_SECRET
-    } = env;
+    } = process.env;
 
     this.twitter = new Twitter({
       consumer_key: CONSUMER_KEY ? CONSUMER_KEY : '',
