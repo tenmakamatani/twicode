@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
-import { changeName } from './commands/changeName';
+import { run } from './commands/run';
+import { register } from './commands/register';
 
 import { sleep } from './lib/sleep';
 
@@ -8,16 +9,23 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "twicode" is now active!');
 
-  let disposable = vscode.commands.registerCommand('extension.changeName', async () => {
+  const runCommand = vscode.commands.registerCommand('twicode.run', async () => {
 
     while (true) {
-      await changeName();
+      await run();
       await sleep(10000);
     }
 
   });
 
-  context.subscriptions.push(disposable);
+  const registerCommand = vscode.commands.registerCommand('twicode.register', () => {
+    
+    register();
+
+  });
+
+  context.subscriptions.push(runCommand);
+  context.subscriptions.push(registerCommand);
 }
 
 export function deactivate() {}

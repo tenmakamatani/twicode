@@ -10,14 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.changeName"
+		"onCommand:twicode.run",
+		"onCommand:twicode.register"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.changeName",
-				"title": "Change Name"
+				"command": "twicode.run",
+				"title": "Run"
+			},
+			{
+				"command": "twicode.register",
+				"title": "Register"
 			}
 		]
 	},
@@ -33,6 +38,7 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
+		"@types/openurl": "^1.0.0",
 		"@types/twitter": "^1.7.0",
 		"@types/vscode": "^1.40.0",
 		"glob": "^7.1.5",
@@ -43,6 +49,7 @@
 	},
 	"dependencies": {
 		"dotenv": "^8.2.0",
+		"openurl": "^1.1.1",
 		"twitter": "^1.7.1"
 	}
 }

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { TwitterClient } from '../lib/TwitterClient';
 
-export const changeName = async () => {
+export const run = async () => {
 
   // Create TwtterClient
   const twitter = new TwitterClient();
