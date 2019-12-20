@@ -5,7 +5,22 @@ import { TwitterClient } from '../lib/TwitterClient';
 export const run = async () => {
 
   // Create TwtterClient
-  const twitter = new TwitterClient();
+  const configuration = vscode.workspace.getConfiguration('twitter');
+  // Enable environment values
+  const CONSUMER_KEY = configuration.get('consumerkey') as string;
+  const CONSUMER_SECRET = configuration.get('consumersecret') as string;
+  const ACCESS_TOKEN_KEY = configuration.get('accesstokenkey') as string;
+  const ACCESS_TOKEN_SECRET = configuration.get('accesstokensecret') as string;
+  if (!(CONSUMER_KEY && CONSUMER_SECRET && ACCESS_TOKEN_KEY && ACCESS_TOKEN_SECRET)) {
+    vscode.commands.executeCommand('twicode.register');
+    return;
+  }
+  const twitter = new TwitterClient(
+    CONSUMER_KEY,
+    CONSUMER_SECRET,
+    ACCESS_TOKEN_KEY,
+    ACCESS_TOKEN_SECRET
+  );
 
   // Get twitter username
   let name;
